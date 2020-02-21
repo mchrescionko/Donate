@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0c005340-98ef-4b1b-878a-57a2ed0d1d47" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1XfeEfekC4wif61qjWEaTIs5A4H" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/App1" />
+      <recent name="$PROJECT_DIR$/App1/templates/App1" />
+      <recent name="$PROJECT_DIR$/App1/templates" />
+      <recent name="$PROJECT_DIR$/App1/static/App1" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0c005340-98ef-4b1b-878a-57a2ed0d1d47" name="Default Changelist" comment="" />
+      <created>1581441465393</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581441465393</updated>
+      <workItem from="1581441466584" duration="2177000" />
+      <workItem from="1581449564521" duration="8268000" />
+      <workItem from="1581502185899" duration="27081000" />
+      <workItem from="1581610665366" duration="1218000" />
+      <workItem from="1581671582587" duration="253000" />
+      <workItem from="1581927859588" duration="19396000" />
+      <workItem from="1582108997213" duration="7559000" />
+      <workItem from="1582201669487" duration="14702000" />
+      <workItem from="1582276304306" duration="11391000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="798" y="329" width="568" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581451830771">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="798" y="329" width="568" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1581451830771" />
+    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl" timestamp="1581449140857">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1581449140857" />
+    <state x="473" y="176" key="SettingsEditor" timestamp="1581945693089">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="473" y="176" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581945693089" />
+    <state x="575" y="393" key="com.intellij.ide.util.TipDialog" timestamp="1582276312990">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="575" y="393" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1582276312990" />
+    <state x="709" y="149" width="857" height="806" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1582293346738">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="709" y="149" width="857" height="806" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1582293346738" />
+    <state x="605" y="311" key="search.everywhere.popup" timestamp="1582203312785">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="605" y="311" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1582203312785" />
+  </component>
+</project>
