@@ -1,19 +1,31 @@
 {% extends 'App1/base.html' %}
 {% block content %}
-    {% load static %}
+{% load static %}
 
-    <div class="slogan container container--90 help col">
-        <div class="form-section--column">
+<div class="slogan container container--90 help col">
+    <div class="form-section--column">
 
-            <h2>imię: {{ user.first_name }} {{ user.id }}</h2>
-            <h2>naziwsko: {{ user.last_name }}</h2>
-            <h2>email: {{ user.email }}</h2>
-            <h1>Lista darów:</h1>
-            {% for donation in donations %}
-                
-                <h3>ilość worków: {{ donation.quantity }} <br/> organizacja: {{ donation.institution.name }}<br/> data: {{ donation.pick_up_date }} {{ donation.pick_up_time }}</h3>
-            {% endfor %}
-        </div>
+        <h2>imię: {{ user.first_name }} {{ user.id }}
+            <br/>naziwsko: {{ user.last_name }}
+            <br/>email: {{ user.email }}</h2>
+        <h1>Lista darów:</h1>
+        {% for donation in donations %}
+
+
+            <form method="post">
+            {% csrf_token %}
+            <h1 {% if donation.is_taken == False %}
+            class="taken" {% endif %}>
+        ilość worków: {{ donation.quantity }} <br/>
+        organizacja: {{ donation.institution.name }}<br/>
+        data: {{ donation.pick_up_date }} {{ donation.pick_up_time }} <br/>
+        zabrany:{{ donation.is_taken }}<br/>
+        <button class="btn btn--without-border" name="button" value={{ donation.id }} type="submit">Zamień</button>
+        </h1>
+        </form>
+        {% endfor %}
+
     </div>
+</div>
 
 {% endblock %}

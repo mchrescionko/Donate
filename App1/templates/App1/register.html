@@ -3,6 +3,7 @@
 {% load static %}
     <section class="login-page">
       <h2>Załóż konto</h2>
+      <h3>{{ info }}</h3>
       <form method="post">
           {% csrf_token %}
         <div class="form-group">

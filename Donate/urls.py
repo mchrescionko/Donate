@@ -33,5 +33,7 @@ urlpatterns = [
     path('profile/', Profile.as_view(), name='profile'),
     path('changePassword/', ChangePasswordView.as_view(), name='changePassword'),
     path('resetPassword/', ResetPasswordView.as_view(), name='activateResetPassword'),
+    path('editProfile/', EditProfileView.as_view(), name='editProfile'),
+    path('sendEmail/', sendEmailView.as_view(), name='sendEmail'),
 
 ]

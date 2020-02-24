@@ -1413,6 +1413,10 @@ header nav ul li:last-of-type {
   line-height: 2em;
 }
 
+.taken {
+  color: darkgray;
+}
+
 /* line 36, scss/modules/homepage-sections/_help.scss */
 .help--slides ul {
   list-style: none;

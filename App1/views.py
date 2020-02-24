@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+import datetime
+import re
 # Create your views here.
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -17,8 +18,8 @@ from django.core.mail import EmailMessage
 
 from .tokens import *
 
-
 from .models import *
+
 
 class LandingPageView(View):
     def get(self, request):
@@ -31,13 +32,12 @@ class LandingPageView(View):
         for donation in donations:
             bags = bags + int(donation.quantity)
 
+        return render(request, 'App1/index.html', {"bags": bags,
+                                                   "institutionsNumber": institutionsNumber,
+                                                   "Fundations": Fundations,
+                                                   "Organizations": Organizations,
+                                                   "Collections": Collections})
 
-
-        return render(request, 'App1/index.html', {"bags":bags,
-                                                   "institutionsNumber":institutionsNumber,
-                                                   "Fundations":Fundations,
-                                                   "Organizations":Organizations,
-                                                   "Collections":Collections})
 
 class AddDonationView(View):
     def get(self, request):
@@ -45,8 +45,8 @@ class AddDonationView(View):
             categories = Category.objects.all()
             institutions = Institution.objects.all()
 
-            return render(request, 'App1/form.html', {"categories":categories,
-                                                      "institutions":institutions})
+            return render(request, 'App1/form.html', {"categories": categories,
+                                                      "institutions": institutions})
         else:
             return render(request, 'App1/login.html')
 
@@ -61,10 +61,11 @@ class AddDonationView(View):
         time = request.POST.get("time")
         more_info = request.POST.get("more_info")
 
-        Donation.objects.create(city=city, zip_code = postcode, pick_up_date=data, pick_up_time=time, pick_up_comment=more_info, quantity=bags, institution=organization, address=address, phone_number=phone )
+        Donation.objects.create(city=city, zip_code=postcode, pick_up_date=data, pick_up_time=time,
+                                pick_up_comment=more_info, quantity=bags, institution=organization, address=address,
+                                phone_number=phone)
 
         return render(request, 'App1/index.html')
-
 
 
 class LoginView(View):
@@ -100,9 +101,21 @@ class RegisterView(View):
         email = request.POST.get("email")
         password = request.POST.get("password")
         password2 = request.POST.get("password2")
+        specialCharacters = ['$', '#', '@', '!', '*']
 
         if password == password2 and user_name != "" and user_surname != "" and email != "" and password != "":
-            user = User.objects.create_user(is_active=False, username=email, password=password, first_name=user_name, last_name=user_surname, email=email)
+            if len(list(password2)) < 8:
+                return render(request, 'App1/register.html', {"info": "Hasło jest zbyt krótkie"})
+            elif not re.search(r"[\d]+", password2):
+                return render(request, 'App1/register.html', {"info":"Make sure your password has a number in it"})
+            elif re.search(r"[A-Z]+", password2) is None:
+                return render(request, 'App1/register.html', {"info":"Make sure your password has a capital letter in it"})
+            elif re.search('specialCharacters',password2) is None:
+                return render(request, 'App1/register.html',
+                              {"info": "Make sure your password has a special sign"})
+
+            user = User.objects.create_user(is_active=False, username=email, password=password, first_name=user_name,
+                                            last_name=user_surname, email=email)
 
             mail_subject = 'Activate your account.'
             current_site = get_current_site(request)
@@ -115,8 +128,8 @@ class RegisterView(View):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
-
-
+        else:
+            return render(request, 'App1/register.html', {"info": "Wypełnij wszystkie pola"})
 
 class Activate(View):
     def get(self, request, uid, token):
@@ -132,17 +145,31 @@ class Activate(View):
             user.is_active = True
             user.save()
             login(request, user)
-            return render(request,'App1/index.html')
+            return render(request, 'App1/index.html')
 
         else:
             return HttpResponse('Activation link is invalid!')
+
 
 class Profile(View):
     def get(self, request):
         user = request.user
         id = request.user.id
-        donations = Donation.objects.filter(user_id=id)
-        return render(request,'App1/profile.html', {"user":user, "donations":donations})
+        donations = Donation.objects.filter(user_id=id).order_by('-is_taken')
+        return render(request, 'App1/profile.html', {"user": user, "donations": donations})
+    def post(self, request):
+        id = request.POST.get("button")
+        taken = Donation.objects.get(id=id).is_taken
+        Donation.objects.filter(id=id).update(pick_up_date=datetime.date.today().isoformat())
+        Donation.objects.filter(id=id).update(pick_up_time=datetime.time())
+        if taken == True:
+            Donation.objects.filter(id=id).update(is_taken=False)
+        else:
+            Donation.objects.filter(id=id).update(is_taken=True)
+        return redirect("profile")
+
+
+
 
 class ChangePasswordView(View):
     def get(self, request):
@@ -152,8 +179,8 @@ class ChangePasswordView(View):
         oldpassword = request.POST.get("oldpassword")
         user = authenticate(username=request.user.email, password=oldpassword)
 
-        if user is  None:
-            return render(request, "App1/changePassword.html", {"user":user, "info":"Podałeś błędne hasło"})
+        if user is None:
+            return render(request, "App1/changePassword.html", {"user": user, "info": "Podałeś błędne hasło"})
         else:
 
             newpassword1 = request.POST.get("newpassword1")
@@ -164,7 +191,9 @@ class ChangePasswordView(View):
                 u.save()
                 return render(request, "App1/changePassword.html", {"user": user, "info": "Hasło zmienione"})
             else:
-                return render(request, "App1/changePassword.html", {"user": user, "info": "Podaj dwa takie same hasła, hasło musi zawierać znaki"})
+                return render(request, "App1/changePassword.html",
+                              {"user": user, "info": "Podaj dwa takie same hasła, hasło musi zawierać znaki"})
+
 
 class ResetPasswordView(View):
     def get(self, request):
@@ -189,16 +218,17 @@ class ResetPasswordView(View):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
 
-            return render(request, "App1/resetPassword.html", {"info":"Wysłano email"})
+            return render(request, "App1/resetPassword.html", {"info": "Wysłano email"})
         else:
-            return render(request, "App1/resetPassword.html", {"info":"Nie ma takiego emaila"})
+            return render(request, "App1/resetPassword.html", {"info": "Nie ma takiego emaila"})
+
 
 class ActivateResetPasswordView(View):
     def get(self, request, uid, id):
 
         uid = force_text(urlsafe_base64_decode(uid))
         if len(User.objects.filter(tokenResetPassword=uid, id=id)) == 1:
-            return render(request,'App1/newPassword.html')
+            return render(request, 'App1/newPassword.html')
 
         else:
             return HttpResponse('Activation link is invalid!')
@@ -213,4 +243,45 @@ class ActivateResetPasswordView(View):
             return redirect("login")
         else:
             return render(request, "App1/newPassword.html",
-                          { "info": "Podaj dwa takie same hasła, hasło musi zawierać znaki"})
+                          {"info": "Podaj dwa takie same hasła, hasło musi zawierać znaki"})
+
+
+class EditProfileView(View):
+    def get(self, request):
+        user = request.user
+        return render(request, "App1/editProfile.html", {"user": user})
+
+    def post(self, request):
+        email = request.POST.get("email")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+
+        if len(User.objects.filter(email=email)) == 1:
+            return render(request, "App1/editProfile.html", {"info": "podany email już istnieje"})
+        u = request.user
+        if first_name is not None and first_name != "":
+            u.first_name = first_name
+        if last_name is not None and last_name != "":
+            u.last_name = last_name
+        if email is not None and email != "":
+            u.email = email
+        u.save()
+        return render(request, "App1/editProfile.html", {"info": "Dane zmienione"})
+
+
+class sendEmailView(View):
+    def post(self, request):
+        message = request.POST.get("message")
+        first_name = request.POST.get("namee")
+        last_name = request.POST.get("surname")
+
+        mail_subject = 'Wiadomość od użytkownika'
+
+
+        message = f"{first_name} {last_name} {message}"
+        emails = User.objects.filter(is_superuser=True)
+        for element in emails:
+            emailadress = element.email
+            email = EmailMessage(mail_subject, message, to=[emailadress])
+            email.send()
+        return render(request, "App1/index.html")

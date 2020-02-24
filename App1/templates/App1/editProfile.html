@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'App1/base.html' %}
+{% block content %}
+    {% load static %}
+
+    <section class="login-page">
+        <h2>Edytuj profil</h2>
+        <h3>{{ info }}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="email" name="email" placeholder="email" >
+            </div>
+          <div class="form-group">
+                <input type="text" name="first_name" placeholder="imię">
+            </div>
+            <div class="form-group">
+                <input type="text" name="last_name" placeholder="nazwisko">
+
+            </div>
+
+            <div class="form-group form-group--buttons">
+
+                <button class="btn" type="submit">Zmień</button>
+            </div>
+        </form>
+    </section>
+
+{% endblock %}
