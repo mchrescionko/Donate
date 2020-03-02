@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import datetime
 import re
+import pdb
 # Create your views here.
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -51,21 +52,31 @@ class AddDonationView(View):
             return render(request, 'App1/login.html')
 
     def post(self, request):
-        bags = request.POST.get("bags")
-        organization = request.POST.get("organization")
-        address = request.POST.get("address")
-        city = request.POST.get("city")
-        postcode = request.POST.get("postcode")
-        phone = request.POST.get("phone")
-        data = request.POST.get("data")
-        time = request.POST.get("time")
-        more_info = request.POST.get("more_info")
 
-        Donation.objects.create(city=city, zip_code=postcode, pick_up_date=data, pick_up_time=time,
-                                pick_up_comment=more_info, quantity=bags, institution=organization, address=address,
-                                phone_number=phone)
+        first = request.POST
+        second = request.POST.get("bags")
 
+
+
+        Sth.objects.create(first=first, second=second)
         return render(request, 'App1/index.html')
+        # # bags = request.POST.get("bags")
+        # bags = 4
+        # organization = request.body.get("organization")
+        # # address = request.POST.get("address")
+        # address = request.body.get("city")
+        # postcode = request.body.get("postcode")
+        # # phone = request.POST.get("phone")
+        # phone = 32456
+        # data = request.body.get("data")
+        # time = request.body.get("time")
+        # more_info = request.body.get("more_info")
+        # user_id = request.body.get("user_id")
+        # city = request.body.get("city")
+
+        # Donation.objects.create(city=city, zip_code=postcode, pick_up_date=data, pick_up_time=time,
+        #                         pick_up_comment=more_info, quantity=bags, institution_id=organization, address=address,
+        #                         phone_number=phone, user_id = user_id)
 
 
 class LoginView(View):
