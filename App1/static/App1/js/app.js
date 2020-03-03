@@ -225,7 +225,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // TODO: Validation
 
-
+            // console.log(this.currentStep);
+            // if (this.currentStep == 3) {
+            //     $.ajax({
+            //     url: "http://127.0.0.1:8004/addDonation2/", //gdzie się łączymy
+            //     type: "post", //typ połączenia, domyślnie get
+            //     dataType: "json", //typ danych jakich oczekujemy w odpowiedzi
+            //     // contentType: 'json',
+            //
+            //     data: { //dane do wysyłki
+            //
+            //
+            //     },})
+            // }
 
 
             this.slides.forEach(slide => {
@@ -249,39 +261,67 @@ document.addEventListener("DOMContentLoaded", function () {
          */
         submit(e) {
             e.preventDefault();
+
             this.currentStep++;
             this.updateForm();
-            var csrftoken = $.cookie('csrftoken');
+            // var csrftoken = $.cookie('csrftoken');
 
-            function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-            }
+            // function csrfSafeMethod(method) {
+            //     // these HTTP methods do not require CSRF protection
+            //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            // }
 
-            $.ajaxSetup({
-                beforeSend: function (xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
+            // $.ajaxSetup({
+            //     beforeSend: function (xhr, settings) {
+            //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            //         }
+            //     }
+            // });
+            var checkboxes = document.getElementsByName('categories');
+            var vals = "";
+            for (var i=0, n=checkboxes.length;i<n;i++)
+            {
+                if (checkboxes[i].checked)
+                {
+                    vals += " "+checkboxes[i].value;
                 }
-            });
+            }
+            if (vals) vals = vals.substring(1);
+
+            var radios = document.getElementsByName('organization');
+
+            for (var i = 0, length = radios.length; i < length; i++)
+            {
+              if (radios[i].checked)
+              {
+
+                var organization_id = radios[i].value;
+                break;
+              }
+            }
             $.ajax({
                 url: "http://127.0.0.1:8004/addDonation/", //gdzie się łączymy
                 type: "post", //typ połączenia, domyślnie get
                 dataType: "json", //typ danych jakich oczekujemy w odpowiedzi
-                contentType: 'json',
+                // contentType: 'json',
 
                 data: { //dane do wysyłki
-                    'bags': "2",
-                    'organization': 4,
-                    'address': "address",
-                    'city': "city",
-                    'postcode': "postcode",
-                    'phone': "phone",
-                    'data': "data",
-                    'time': "time",
-                    'more_info': "more_info",
-                    'user_id': 3,
+                    // 'quantity': document.querySelector('bags').value,
+
+                    'quantity':document.querySelector('#bags').value,
+                    'categories': 1,
+
+                    'categories2': vals,
+                    'institution': organization_id,
+                    'address': document.querySelector('#address').value,
+                    'phone_number': document.querySelector('#phone').value,
+                    'city': document.querySelector('#city').value,
+                    'zip_code': document.querySelector('#postcode').value,
+                    'pick_up_date': document.querySelector('#data').value,
+                    'pick_up_time': document.querySelector('#time').value,
+                    'pick_up_comment': document.querySelector('#more_info').value,
+                    'user': 3,
                     'csrfmiddlewaretoken': "{{csrf_token}}",
 
 
@@ -291,6 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
             });
+            location.href="/confirmation"
         }
     }
 

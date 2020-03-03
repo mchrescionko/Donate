@@ -16,6 +16,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 
 from django.core.mail import EmailMessage
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .tokens import *
 
@@ -40,6 +42,7 @@ class LandingPageView(View):
                                                    "Collections": Collections})
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AddDonationView(View):
     def get(self, request):
         if request.user.id is not None:
@@ -53,30 +56,36 @@ class AddDonationView(View):
 
     def post(self, request):
 
-        first = request.POST
-        second = request.POST.get("bags")
+        quantity = request.POST.get("quantity")
 
 
+        categories2 = request.POST.get("categories2").split()
 
-        Sth.objects.create(first=first, second=second)
-        return render(request, 'App1/index.html')
-        # # bags = request.POST.get("bags")
-        # bags = 4
-        # organization = request.body.get("organization")
-        # # address = request.POST.get("address")
-        # address = request.body.get("city")
-        # postcode = request.body.get("postcode")
-        # # phone = request.POST.get("phone")
-        # phone = 32456
-        # data = request.body.get("data")
-        # time = request.body.get("time")
-        # more_info = request.body.get("more_info")
-        # user_id = request.body.get("user_id")
-        # city = request.body.get("city")
 
-        # Donation.objects.create(city=city, zip_code=postcode, pick_up_date=data, pick_up_time=time,
-        #                         pick_up_comment=more_info, quantity=bags, institution_id=organization, address=address,
-        #                         phone_number=phone, user_id = user_id)
+        institution = int(request.POST.get("institution"))
+        institution = Institution.objects.get(pk=institution)
+        address = request.POST.get("city")
+        phone_number = int(request.POST.get("phone_number"))
+        city = request.POST.get("city")
+        zip_code = request.POST.get("zip_code")
+        pick_up_date = request.POST.get("pick_up_date")
+        pick_up_date = datetime.datetime.strptime(pick_up_date, "%Y-%m-%d").date()
+
+        pick_up_time = request.POST.get("pick_up_time")
+        pick_up_time = datetime.datetime.strptime(pick_up_time, "%H:%M").time()
+        # pdb.set_trace()
+
+        pick_up_comment = request.POST.get("pick_up_comment")
+        # pdb.set_trace()
+
+        user = request.user.id
+
+        Donation.objects.create(quantity=quantity, institution=institution,
+                                address=address, phone_number=phone_number, city=city,
+                                zip_code=zip_code, pick_up_date=pick_up_date,
+                                pick_up_time=pick_up_time, pick_up_comment= pick_up_comment, is_taken = False, user = request.user)
+
+        return render(request, 'App1/login.html')
 
 
 class LoginView(View):
@@ -118,12 +127,13 @@ class RegisterView(View):
             if len(list(password2)) < 8:
                 return render(request, 'App1/register.html', {"info": "Hasło jest zbyt krótkie"})
             elif not re.search(r"[\d]+", password2):
-                return render(request, 'App1/register.html', {"info":"Make sure your password has a number in it"})
+                return render(request, 'App1/register.html', {"info": "Make sure your password has a number in it"})
             elif re.search(r"[A-Z]+", password2) is None:
-                return render(request, 'App1/register.html', {"info":"Make sure your password has a capital letter in it"})
-            elif re.search('specialCharacters',password2) is None:
                 return render(request, 'App1/register.html',
-                              {"info": "Make sure your password has a special sign"})
+                              {"info": "Make sure your password has a capital letter in it"})
+            # elif re.search('specialCharacters', password2) is None:
+            #     return render(request, 'App1/register.html',
+            #                   {"info": "Make sure your password has a special sign"})
 
             user = User.objects.create_user(is_active=False, username=email, password=password, first_name=user_name,
                                             last_name=user_surname, email=email)
@@ -141,6 +151,7 @@ class RegisterView(View):
             return HttpResponse('Please confirm your email address to complete the registration')
         else:
             return render(request, 'App1/register.html', {"info": "Wypełnij wszystkie pola"})
+
 
 class Activate(View):
     def get(self, request, uid, token):
@@ -168,6 +179,7 @@ class Profile(View):
         id = request.user.id
         donations = Donation.objects.filter(user_id=id).order_by('-is_taken')
         return render(request, 'App1/profile.html', {"user": user, "donations": donations})
+
     def post(self, request):
         id = request.POST.get("button")
         taken = Donation.objects.get(id=id).is_taken
@@ -178,8 +190,6 @@ class Profile(View):
         else:
             Donation.objects.filter(id=id).update(is_taken=True)
         return redirect("profile")
-
-
 
 
 class ChangePasswordView(View):
@@ -288,7 +298,6 @@ class sendEmailView(View):
 
         mail_subject = 'Wiadomość od użytkownika'
 
-
         message = f"{first_name} {last_name} {message}"
         emails = User.objects.filter(is_superuser=True)
         for element in emails:
@@ -296,3 +305,7 @@ class sendEmailView(View):
             email = EmailMessage(mail_subject, message, to=[emailadress])
             email.send()
         return render(request, "App1/index.html")
+
+class ConfirmationView(View):
+    def get(self, request):
+        return render(request, "App1/form-confirmation.html")
