@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0c005340-98ef-4b1b-878a-57a2ed0d1d47" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App1/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/App1/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App1/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/App1/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App1/static/App1/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/App1/static/App1/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App1/templates/App1/form-confirmation.html" beforeDir="false" afterPath="$PROJECT_DIR$/App1/templates/App1/form-confirmation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App1/templates/App1/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/App1/templates/App1/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App1/templates/App1/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/App1/templates/App1/form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/App1/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Donate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Donate/urls.py" afterDir="false" />
@@ -44,7 +46,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PożyczKsiążkę" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -78,6 +80,11 @@
       <workItem from="1582473933466" duration="17051000" />
       <workItem from="1582541753419" duration="5751000" />
       <workItem from="1583146120537" duration="37507000" />
+      <workItem from="1583273221005" duration="8144000" />
+      <workItem from="1583346848190" duration="620000" />
+      <workItem from="1583413899793" duration="375000" />
+      <workItem from="1583695443445" duration="7805000" />
+      <workItem from="1583756415457" duration="1190000" />
     </task>
     <servers />
   </component>
@@ -89,7 +96,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -104,26 +113,26 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="735" y="342" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1582480438048" />
-    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl" timestamp="1581449140857">
+    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl" timestamp="1583414046782">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1581449140857" />
+    <state x="713" y="374" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1583414046782" />
     <state x="473" y="176" key="SettingsEditor" timestamp="1581945693089">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="473" y="176" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1581945693089" />
-    <state x="575" y="393" key="com.intellij.ide.util.TipDialog" timestamp="1582939399394">
+    <state x="575" y="393" key="com.intellij.ide.util.TipDialog" timestamp="1583413900827">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="575" y="393" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1582939399394" />
+    <state x="575" y="393" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1583413900827" />
     <state x="709" y="149" width="857" height="806" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583153199079">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="709" y="149" width="857" height="806" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1583153199079" />
-    <state x="221" y="100" width="859" height="653" key="dock-window-1" timestamp="1583262552054">
+    <state x="1076" y="92" width="754" height="898" key="dock-window-1" timestamp="1583346858471">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="221" y="100" width="859" height="653" key="dock-window-1/67.27.1853.1053@67.27.1853.1053" timestamp="1583262552054" />
+    <state x="1076" y="92" width="754" height="898" key="dock-window-1/67.27.1853.1053@67.27.1853.1053" timestamp="1583346858471" />
     <state x="605" y="311" width="672" height="678" key="search.everywhere.popup" timestamp="1582566794082">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

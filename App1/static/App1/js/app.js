@@ -238,7 +238,30 @@ document.addEventListener("DOMContentLoaded", function () {
             //
             //     },})
             // }
+            console.log(this.currentStep);
+            if (this.currentStep == 5)
+            {
+                                var radios2 = document.getElementsByName('organization');
+                for (var i = 0, length = radios2.length; i < length; i++)
+                {
+                  if (radios2[i].checked)
+                  {
 
+                    var organization_id2 = radios2[i].dataset.name;
+                    break;
+                  }
+                }
+                // document.querySelector('#summary_quantity').value = document.querySelector('#bags').value;
+                document.querySelector('#summary_quantity').innerHTML = document.querySelector('#bags').value;
+                document.querySelector('#summary_organization').innerHTML = organization_id2;
+                document.querySelector('#summary_address').innerHTML = document.querySelector('#address').value;
+                document.querySelector('#summary_city').innerHTML = document.querySelector('#city').value;
+                document.querySelector('#summary_postcode').innerHTML = document.querySelector('#postcode').value;
+                document.querySelector('#summary_phone').innerHTML = document.querySelector('#phone').value;
+                document.querySelector('#summary_data').innerHTML = document.querySelector('#data').value;
+                document.querySelector('#summary_time').innerHTML = document.querySelector('#time').value;
+                document.querySelector('#summary_text').innerHTML = document.querySelector('#more_info').value;
+            }
 
             this.slides.forEach(slide => {
                 slide.classList.remove("active");

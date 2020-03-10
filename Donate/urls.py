@@ -36,5 +36,6 @@ urlpatterns = [
     path('editProfile/', EditProfileView.as_view(), name='editProfile'),
     path('sendEmail/', sendEmailView.as_view(), name='sendEmail'),
     path('confirmation/', ConfirmationView.as_view(), name='confirmation'),
+    path('summaryDonation/', SummaryDonationView.as_view(), name='summaryDonationn'),
 
 ]

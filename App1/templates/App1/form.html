@@ -110,7 +110,7 @@
 
                         <div class="form-group form-group--checkbox">
                             <label>
-                                <input type="radio" name="organization" value="{{ institution.id }}"/>
+                                <input type="radio" name="organization" data-name="{{ institution.name }}" value="{{ institution.id }}"/>
                                 <span class="checkbox radio"></span>
                                 <span class="description">
                   <div class="title">{{ institution.name }} {{ institution.category.category_id }}
@@ -195,14 +195,14 @@
                             <ul>
                                 <li>
                                     <span class="icon icon-bag"></span>
-                                    <span class="summary--text"
-                                    >4 worki ubrań w dobrym stanie dla dzieci</span
+                                    <span id=summary_quantity class="summary--text"
+                                    > worki ubrań w dobrym stanie dla dzieci</span
                                     >
                                 </li>
 
                                 <li>
                                     <span class="icon icon-hand"></span>
-                                    <span class="summary--text"
+                                    <span id=summary_organization class="summary--text"
                                     >Dla fundacji "Mam marzenie" w Warszawie</span
                                     >
                                 </li>
@@ -213,19 +213,19 @@
                             <div class="form-section--column">
                                 <h4>Adres odbioru:</h4>
                                 <ul>
-                                    <li>Prosta 51</li>
-                                    <li>Warszawa</li>
-                                    <li>99-098</li>
-                                    <li>123 456 789</li>
+                                    <li id = summary_address>Prosta 51</li>
+                                    <li id = summary_city>Warszawa</li>
+                                    <li id = summary_postcode>99-098</li>
+                                    <li id = summary_phone>123 456 789</li>
                                 </ul>
                             </div>
 
                             <div class="form-section--column">
                                 <h4>Termin odbioru:</h4>
                                 <ul>
-                                    <li>13/12/2018</li>
-                                    <li>15:40</li>
-                                    <li>Brak uwag</li>
+                                    <li id = summary_data>13/12/2018</li>
+                                    <li id="summary_time">15:40</li>
+                                    <li id="summary_text">Brak uwag</li>
                                 </ul>
                             </div>
                         </div>

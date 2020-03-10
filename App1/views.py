@@ -3,7 +3,7 @@ import datetime
 import re
 import pdb
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -127,13 +127,13 @@ class RegisterView(View):
             if len(list(password2)) < 8:
                 return render(request, 'App1/register.html', {"info": "Hasło jest zbyt krótkie"})
             elif not re.search(r"[\d]+", password2):
-                return render(request, 'App1/register.html', {"info": "Make sure your password has a number in it"})
+                return render(request, 'App1/register.html', {"info": "Upewnij się, że Twoje hasło zawiera cyfrę"})
             elif re.search(r"[A-Z]+", password2) is None:
                 return render(request, 'App1/register.html',
-                              {"info": "Make sure your password has a capital letter in it"})
-            # elif re.search('specialCharacters', password2) is None:
-            #     return render(request, 'App1/register.html',
-            #                   {"info": "Make sure your password has a special sign"})
+                              {"info": "Upewnij się, że Twoje hasło zawiera wielką literę"})
+            elif not re.search(r"[?!@#$%^&*~]+", password2):
+                return render(request, 'App1/register.html',
+                              {"info": "Upewnij się, że Twoje hasło zawiera znak specjalny"})
 
             user = User.objects.create_user(is_active=False, username=email, password=password, first_name=user_name,
                                             last_name=user_surname, email=email)
@@ -309,3 +309,37 @@ class sendEmailView(View):
 class ConfirmationView(View):
     def get(self, request):
         return render(request, "App1/form-confirmation.html")
+
+@method_decorator(csrf_exempt, name='dispatch')
+class SummaryDonationView(View):
+    def post(self, request):
+        Summ_quantity = request.POST.get("quantity")
+        pdb.set_trace()
+        Summ_categories2 = request.POST.get("categories2").split()
+
+        # Summ_institution = int(request.POST.get("institution"))
+        # Summ_institution = Institution.objects.get(pk=institution)
+        # Summ_address = request.POST.get("city")
+        # Summ_phone_number = int(request.POST.get("phone_number"))
+        # Summ_city = request.POST.get("city")
+        # Summ_zip_code = request.POST.get("zip_code")
+        # Summ_pick_up_date = request.POST.get("pick_up_date")
+        # Summ_pick_up_date = datetime.datetime.strptime(pick_up_date, "%Y-%m-%d").date()
+        #
+        # Summ_pick_up_time = request.POST.get("pick_up_time")
+        # Summ_pick_up_time = datetime.datetime.strptime(pick_up_time, "%H:%M").time()
+        # # pdb.set_trace()
+        #
+        # Summ_pick_up_comment = request.POST.get("pick_up_comment")
+        # # pdb.set_trace()
+        return JsonResponse({'Summ_quantity': Summ_quantity,
+                             'Summ_categories2': Summ_categories2,
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             'foo': 'bar',
+                             })

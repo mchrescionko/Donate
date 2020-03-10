@@ -21,6 +21,9 @@ class Institution(models.Model):
     type = models.IntegerField(choices=TYPE, default=1)
     category = models.ManyToManyField(Category)
 
+    def __str__(self):
+        return self.name
+
 class User(AbstractUser):
     tokenResetPassword = models.UUIDField(null=True, unique=True)
     class Meta:
